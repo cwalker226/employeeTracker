@@ -12,7 +12,7 @@ var connection = mysql.createConnection({
     user: "root",
   
     // Your password
-    password: "Lookup0226!",
+    password: "",
     database: "company"
 });
 
@@ -78,7 +78,7 @@ function viewAllEmployees(){
                       LEFT JOIN department on role.dept_id = department.id 
                       LEFT JOIN employee manager on manager.id = employee.manager_id;`, function(err, result) {
         if (err) throw err;
-        console.table(result);
+        cTable.table(result);
         runSearch();
     });
 }
@@ -86,7 +86,7 @@ function viewAllEmployees(){
 function viewAllRoles(){
     connection.query(`SELECT * FROM role;`, function(err, result) {
         if (err) throw err;
-        console.table(result);
+        cTable.table(result);
         runSearch();
     });
 }
@@ -94,7 +94,7 @@ function viewAllRoles(){
 function viewAllDepartments(){
     connection.query(`SELECT * FROM department;`, function(err, result) {
         if (err) throw err;
-        console.table(result);
+        cTable.table(result);
         runSearch();
     });
 }
@@ -121,7 +121,7 @@ function updateEmpRole(){
                                     SET role_id = ?
                                     WHERE id = ?`, [roleID, employeeID], function(err, result) {
                         if (err) throw err;
-                        console.table(result);
+                        cTable.table(result);
                         runSearch();
                     });
                 }); 
@@ -165,7 +165,7 @@ function addEmployee(){
                             connection.query(`INSERT INTO employee(first_name, last_name, role_id, manager_id)
                                               VALUES (?, ?, ?, ?);`, [answer.firstName, answer.lastName, roleID, managerID], function(err, result) {
                                 if (err) throw err;
-                                console.table(result);
+                                cTable.table(result);
                                 runSearch();
                             });
                         });
@@ -174,7 +174,7 @@ function addEmployee(){
                     connection.query(`INSERT INTO employee(first_name, last_name, role_id)
                                       VALUES (?, ?, ?);`, [answer.firstName, answer.lastName, roleID], function(err, result) {
                         if (err) throw err;
-                        console.table(result);
+                        cTable.table(result);
                         runSearch();
                     });
                 }
@@ -204,7 +204,7 @@ function addRole(){
                 connection.query(`INSERT INTO role(title, salary, dept_id)
                                 VALUES(?, ?, ?);`, [answer.title, answer.salary, deptID], function(err, result) {
                     if (err) throw err;
-                    console.table(result);
+                    cTable.table(result);
                     runSearch();
                 });
             });
@@ -221,7 +221,7 @@ function addDepartment(){
             connection.query(`INSERT INTO department(deptName)
                               VALUES (?);`, [answer.deptName], function(err, result) {
                 if (err) throw err;
-                console.table(result);
+                cTable.table(result);
                 runSearch();
             });
         });
